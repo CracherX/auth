@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    container_name: go_app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../config:/app/config
+      - ../secrets/secret.txt:/app/secrets/secret.txt
+    environment:
+      - CONFIG_PATH=/app/config/config.yaml
+      - SECRET_PATH=/app/secrets/secret.txt
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17rc1
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: Cracher
+      POSTGRES_PASSWORD: "12345"
+      POSTGRES_DB: auth
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db_data:

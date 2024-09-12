@@ -6,7 +6,7 @@ server:
 database:
   user: "Cracher"
   password: "12345"
-  host: "localhost"
+  host: "db"
   port: "5432"
   name: "auth"
   ssl_mode: "disable"
